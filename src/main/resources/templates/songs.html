@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<h2>Best Songs</h2>
+    <ul>
+        <li th:each="song : ${songs}">
+            <a th:href="@{/songs/{id}(id=${song.id})}" th:text="${song.title}"></a>
+        </li>
+    </ul>
+</body>
+</html>

@@ -18,16 +18,38 @@ public class MainController {
 		model.addAttribute("name", name);
 		model.addAttribute("last_name", last_name);
 		
-		
-		
 		return "home";
 	}
+	@GetMapping("/movies")
+	public String showBestMovies(Model model) {
+		List<Movie> movieTitles = getBestMovies();
+		model.addAttribute("movies", movieTitles);
+		return "movies";
+	}
+	
+	@GetMapping("/songs")
+    public String showBestSongs(Model model) {
+        List<Song> bestSongs = getBestSongs();
+        model.addAttribute("songs", bestSongs);
+        return "songs";
+    }
+	
 	private List<Movie> getBestMovies() {
-		return null;
+		return List.of(
+				new Movie(1, "Film 1"),
+				new Movie(2, "Film 2"),
+				new Movie(3, "Film 3"),
+				new Movie(4, "Film 4")
+				);
 		
 	}
 	private List<Song> getBestSongs() {
-		return null;
+		return List.of(
+				new Song(1, "Canzone 1"),
+				new Song(2, "Canzone 2"),
+				new Song(3, "Canzone 3"),
+				new Song(4, "Canzone 4")
+				);
 		
 	}
 }
