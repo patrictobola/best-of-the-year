@@ -7,6 +7,7 @@ import org.java.spring.Song;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 @Controller
@@ -26,6 +27,21 @@ public class MainController {
 		model.addAttribute("movies", movieTitles);
 		return "movies";
 	}
+
+	@GetMapping("/movies/{id}")
+	public String showMovieDetails(@PathVariable("id") int id, Model model) {
+	    Movie selectedMovie = getMovieById(id);
+	    model.addAttribute("movie", selectedMovie);
+	    return "movieDetails";
+	}
+
+	private Movie getMovieById(int id) {
+	    List<Movie> bestMovies = getBestMovies();
+	    return bestMovies.stream()
+	            .filter(movie -> movie.getId() == id)
+	            .findFirst()
+	            .orElse(null);
+	}
 	
 	@GetMapping("/songs")
     public String showBestSongs(Model model) {
@@ -33,7 +49,20 @@ public class MainController {
         model.addAttribute("songs", bestSongs);
         return "songs";
     }
+	@GetMapping("/songs/{id}")
+	public String showSongDetails(@PathVariable("id") int id, Model model) {
+		Song selectedSong = getSongById(id);
+		model.addAttribute("song", selectedSong);
+		return "songDetails";
+	}
 	
+	private Song getSongById(int id) {
+		List<Song> bestSongs = getBestSongs();
+		return bestSongs.stream()
+				.filter(movie -> movie.getId() == id)
+				.findFirst()
+				.orElse(null);
+	}
 	private List<Movie> getBestMovies() {
 		return List.of(
 				new Movie(1, "Film 1"),
